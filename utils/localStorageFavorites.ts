@@ -1,10 +1,14 @@
-const togleFavorite = (id: number) => {
-  let favorites: number[] = JSON.parse(localStorage.getItem('favorites') || '[]');
+import { SmallPokemon } from '../interfaces/pokemon-list';
 
-  if(favorites.includes(id)) {
-    favorites = favorites.filter(pokemonId => pokemonId !== id);
+const togleFavorite = (pokemon: SmallPokemon) => {
+  let favorites: SmallPokemon[] = JSON.parse(localStorage.getItem('favorites') || '[]');
+
+  const poke = favorites.find(p => p.id === pokemon.id);
+
+  if(poke) {
+    favorites = favorites.filter(pokemonId => poke.id !== pokemon.id);
   } else {
-    favorites.push(id);
+    favorites.push(pokemon);
   }
 
   localStorage.setItem('favorites', JSON.stringify(favorites));
@@ -12,14 +16,17 @@ const togleFavorite = (id: number) => {
 
 const pokemonIsFavorite = (id: number): boolean => {
   if (typeof window !== 'undefined') {
-    const favorites: number[] = JSON.parse(localStorage.getItem('favorites') || '[]');
-    return favorites.includes(id);
+    const favorites: SmallPokemon[] = JSON.parse(localStorage.getItem('favorites') || '[]');
+
+    const poke = favorites.find(p => p.id === id);
+
+    return poke ? true : false;
   }
 
   return false
 } 
 
-const getPokemons = (): number[] => {
+const getPokemons = (): SmallPokemon[] => {
   return JSON.parse(localStorage.getItem('favorites') || '[]');
 };
 

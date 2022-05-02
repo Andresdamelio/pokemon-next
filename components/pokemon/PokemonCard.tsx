@@ -12,14 +12,14 @@ const PokemonCard = ({ pokemon }: Props) => {
   const { id, img, name } = pokemon;
 
   const goToPokemon = () => {
-    router.push(`/pokemon/${id}`);
+    router.push(`/pokemon/${name}`);
   }
 
   return (
     <Grid xs={6} sm={3} md={3} xl={1} key={id}>
       <Card hoverable clickable onClick={goToPokemon}>
         <Card.Body css={{ p: 2}}>
-          <Card.Image src={img} width="100%" height={130} />
+          <Card.Image src={img as string} width="100%" height={130} />
         </Card.Body>
         <Card.Footer>
           <Row justify='space-between'>
